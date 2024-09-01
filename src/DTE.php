@@ -28,8 +28,6 @@ class DTE
 
     /**
      * Make an DTE
-     *
-     * @return DTE
      */
     public static function make(): DTE
     {
@@ -38,8 +36,6 @@ class DTE
 
     /**
      * Serializes DTE
-     *
-     * @return string
      */
     public function __toString(): string
     {
