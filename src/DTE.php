@@ -1,6 +1,7 @@
 <?php
 
 namespace DTE;
+
 class DTE
 {
     /**
@@ -16,7 +17,8 @@ class DTE
      * Get the author
      * @return array|string[]
      */
-    public static function getAuthor() : array {
+    public static function getAuthor(): array
+    {
         return static::AUTHOR;
     }
 }
