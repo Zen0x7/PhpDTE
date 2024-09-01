@@ -1,0 +1,30 @@
+name: Run styles
+
+on: [push]
+
+jobs:
+  tests:
+    name: Run styles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, libxml, mbstring, zip, bcmath, soap, intl, iconv
+          coverage: pcov
+
+      - name: Run composer install
+        run: composer install
+
+      - name: Run styles
+        run: ./vendor/bin/pint --test
