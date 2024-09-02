@@ -5,6 +5,7 @@ namespace DTE;
 use DOMDocument;
 use DomElement;
 use DOMException;
+use DTE\Models\Cover;
 
 class EnvioDTE
 {
@@ -33,6 +34,11 @@ class EnvioDTE
         $this->root->setAttribute('xsi:schemaLocation', 'http://www.sii.cl/SiiDte EnvioDTE_v10.xsd');
         $this->root->setAttribute('version', '1.0');
         $this->tree->appendChild($this->root);
+    }
+
+    public function setCover(Cover $cover): void
+    {
+        $this->root->appendChild($cover->toElement($this->tree));
     }
 
     /**
