@@ -6,6 +6,7 @@ use DOMDocument;
 use DomElement;
 use DOMException;
 use DTE\Models\Cover;
+use DTE\Models\DTE;
 
 class EnvioDTE
 {
@@ -38,7 +39,11 @@ class EnvioDTE
 
     public function setCover(Cover $cover): void
     {
-        $this->root->appendChild($cover->toElement($this->tree));
+        $this->root->appendChild($cover->toElement());
+    }
+    public function setDTE(DTE $dte): void
+    {
+        $this->root->appendChild($dte->toElement());
     }
 
     /**

@@ -19,26 +19,26 @@ class Cover
 
     public const string TAG_RESOLUTION_NUMBER = 'NroResol';
 
-    public function __construct(public string $emitter, public string $sender, public string $receiver, public string $authorization_at, public string $resolution_number) {}
+    public function __construct(private DOMDocument $tree, public array $params) {}
 
-    public function toElement(DOMDocument $tree): DOMElement
+    public function toElement(): DOMElement
     {
-        $element = $tree->createElement(static::TAG);
+        $element = $this->tree->createElement(static::TAG);
         $element->setAttribute('version', '1.0');
 
-        $emitter = $tree->createElement(static::TAG_EMITTER, $this->emitter);
+        $emitter = $this->tree->createElement(static::TAG_EMITTER, $this->params['rut_emisor']);
         $element->appendChild($emitter);
 
-        $sender = $tree->createElement(static::TAG_SENDER, $this->sender);
+        $sender = $this->tree->createElement(static::TAG_SENDER, $this->params['rut_despachador']);
         $element->appendChild($sender);
 
-        $receiver = $tree->createElement(static::TAG_RECEIVER, $this->receiver);
+        $receiver = $this->tree->createElement(static::TAG_RECEIVER, $this->params['rut_receptor']);
         $element->appendChild($receiver);
 
-        $authorized_at = $tree->createElement(static::TAG_AUTHORIZED_AT, $this->authorization_at);
+        $authorized_at = $this->tree->createElement(static::TAG_AUTHORIZED_AT, $this->params['fecha_autorizacion']);
         $element->appendChild($authorized_at);
 
-        $resolution_number = $tree->createElement(static::TAG_RESOLUTION_NUMBER, $this->resolution_number);
+        $resolution_number = $this->tree->createElement(static::TAG_RESOLUTION_NUMBER, $this->params['numero_resolucion']);
         $element->appendChild($resolution_number);
 
         return $element;

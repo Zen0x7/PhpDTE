@@ -2,13 +2,27 @@
 
 use DTE\EnvioDTE;
 use DTE\Models\Cover;
+use DTE\Models\Document;
+use DTE\Models\DTE;
 use Illuminate\Support\Str;
 
 test('EnvioDTE should be serialized', function () {
     $envioDTE = EnvioDTE::make();
-    $cover = new Cover('71765841-8', '75088076-2', '75388931-0', '2003-09-02', '0');
+    $params = [
+        'rut_emisor' => '71765841-8',
+        'rut_despachador' => '75088076-2',
+        'rut_receptor' => '75388931-0',
+        'fecha_autorizacion' => '2003-09-02',
+        'numero_resolucion' => '0',
+    ];
+    $cover = new Cover($envioDTE->tree, $params);
+    $dte = new DTE($envioDTE->tree);
     $envioDTE->setCover($cover);
+    $envioDTE->setDTE($dte);
+    $document = new Document($envioDTE->tree);
+    $dte->setDocument($document);
     $output = (string) $envioDTE;
+    echo $output;
 
     expect(Str::startsWith($output, '<?xml version="1.0" encoding="ISO-8859-1"?>'))
         ->toBeTrue()
