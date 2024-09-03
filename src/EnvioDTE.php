@@ -41,6 +41,7 @@ class EnvioDTE
     {
         $this->root->appendChild($cover->toElement());
     }
+
     public function setDTE(DTE $dte): void
     {
         $this->root->appendChild($dte->toElement());
